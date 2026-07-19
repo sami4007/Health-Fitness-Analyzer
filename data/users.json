@@ -1,0 +1,36 @@
+[
+    {
+        "user_id": "U002",
+        "name": "Rahim",
+        "age": 23,
+        "gender": "Male",
+        "height": 180.0,
+        "weight": 64.0,
+        "activity_level": "Moderate",
+        "goal": "Maintain",
+        "bmi": 19.75
+    },
+    {
+        "user_id": "U003",
+        "name": "Karim",
+        "age": 22,
+        "gender": "Male",
+        "height": 170.0,
+        "weight": 64.0,
+        "activity_level": "Moderate",
+        "goal": "Maintain",
+        "bmi": 22.15
+    },
+    {
+        "user_id": "U004",
+        "name": "Nahar",
+        "age": 25,
+        "gender": "Female",
+        "height": 170.0,
+        "weight": 69.0,
+        "activity_level": "Moderate",
+        "goal": "Maintain",
+        "bmi": 23.88,
+        "bmi_category": "Normal"
+    }
+]
