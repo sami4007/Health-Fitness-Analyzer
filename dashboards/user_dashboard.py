@@ -20,8 +20,11 @@ class UserDashboard:
         self.controller = UserController()
 
         self.root.title(WINDOW_TITLE)
-        self.root.geometry(f"{WINDOW_WIDTH}x{WINDOW_HEIGHT}")
+        self.root.geometry("1200x800")
         self.root.resizable(False, False)
+        self.root.configure(
+        bg="#F5FAFD"
+        )
 
         self.create_variables()
         self.create_widgets()
@@ -53,195 +56,521 @@ class UserDashboard:
 
     def create_widgets(self):
 
-        title = tk.Label(
+        # ==========================
+        # Header
+        # ==========================
+        self.create_title()
+
+        # ==========================
+        # Main Container
+        # ==========================
+        self.content_frame = tk.Frame(
             self.root,
-            text="Health Fitness & Calorie Tracker",
-            font=("Arial", 18, "bold")
+            bg="#F5FAFD"
         )
 
-        title.pack(pady=10)
+        self.content_frame.pack(
+            fill="both",
+            expand=True,
+            padx=20,
+            pady=(10, 15)
+        )
+
+        # Grid Layout
+        self.content_frame.columnconfigure(
+            0,
+            weight=5
+        )
+
+        self.content_frame.columnconfigure(
+            1,
+            weight=2
+        )
+
+        self.content_frame.rowconfigure(0, weight=0)
+        self.content_frame.rowconfigure(1, weight=0)
+        self.content_frame.rowconfigure(2, weight=0)
+        self.content_frame.rowconfigure(3, weight=1)
+
+        # ==========================
+        # Build UI
+        # ==========================
+        self.create_user_frame()
+        self.create_button_frame()
+        self.create_search_frame()
+        self.create_dashboard_cards()
+        self.create_table()
+        self.create_status_bar()
+
+    # -------------------------------------------------
+
+    def create_title(self):
+
+        title_frame = tk.Frame(
+            self.root
+        )
+
+        title_frame.pack(
+            pady=(15, 5)
+        )
+
+        title = tk.Label(
+            title_frame,
+            text="🏃 Health Fitness & Calorie Tracker",
+            font=("Segoe UI", 20, "bold"),
+            fg="#114B5F"
+        )
+
+        title.pack()
 
         subtitle = tk.Label(
-            self.root,
+            title_frame,
             text="User Management Dashboard",
-            font=("Arial", 12)
+            font=("Segoe UI", 11)
         )
 
-        subtitle.pack()
+        subtitle.pack(pady=(5, 0))
 
-        self.create_user_frame()
-
-        self.create_button_frame()
-
-        self.create_search_frame()
-
-        self.create_table()
 
     # -------------------------------------------------
 
     def create_user_frame(self):
 
         frame = ttk.LabelFrame(
-            self.root,
-            text="User Information",
-            padding=10
+            self.content_frame,
+            text="👤 User Information",
+            padding=15
         )
 
-        frame.pack(padx=20, pady=10)
+        frame.grid(
+            row=0,
+            column=0,
+            sticky="nsew",
+            padx=(0, 10),
+            pady=(0, 10)
+        )
 
-        ttk.Label(frame, text="User ID").grid(row=0, column=0, padx=5, pady=5)
+        self.content_frame.columnconfigure(0, weight=3)
 
-        ttk.Entry(
-            frame,
-            textvariable=self.user_id,
-            state="readonly",
-            width=30
-        ).grid(row=0, column=1)
+        frame.columnconfigure(1, weight=1)
+        frame.columnconfigure(3, weight=1)
 
-        ttk.Label(frame, text="Name").grid(row=0, column=2)
+        fields = [
 
-        ttk.Entry(
-            frame,
-            textvariable=self.name,
-            width=30
-        ).grid(row=0, column=3)
+            ("User ID", self.user_id, "entry_readonly"),
+            ("Name", self.name, "entry"),
 
-        ttk.Label(frame, text="Age").grid(row=1, column=0)
+            ("Age", self.age, "entry"),
+            ("Gender", None, "gender"),
 
-        ttk.Entry(
-            frame,
-            textvariable=self.age,
-            width=30
-        ).grid(row=1, column=1)
+            ("Height (cm)", self.height, "entry"),
+            ("Weight (kg)", self.weight, "entry"),
 
-        ttk.Label(frame, text="Gender").grid(row=1, column=2)
+            ("Activity", self.activity, "activity"),
+            ("Goal", self.goal, "goal")
 
-        gender_frame = ttk.Frame(frame)
+        ]
 
-        gender_frame.grid(row=1, column=3)
+        row = 0
 
-        ttk.Radiobutton(
-            gender_frame,
-            text="Male",
-            variable=self.gender,
-            value="Male"
-        ).pack(side="left")
+        for i in range(0, len(fields), 2):
 
-        ttk.Radiobutton(
-            gender_frame,
-            text="Female",
-            variable=self.gender,
-            value="Female"
-        ).pack(side="left")
+            left = fields[i]
+            right = fields[i + 1]
 
-        ttk.Label(frame, text="Height (cm)").grid(row=2, column=0)
+            ttk.Label(frame, text=left[0]).grid(
+                row=row,
+                column=0,
+                padx=5,
+                pady=8,
+                sticky="w"
+            )
 
-        ttk.Entry(
-            frame,
-            textvariable=self.height,
-            width=30
-        ).grid(row=2, column=1)
+            self.create_field(frame, left, row, 1)
 
-        ttk.Label(frame, text="Weight (kg)").grid(row=2, column=2)
+            ttk.Label(frame, text=right[0]).grid(
+                row=row,
+                column=2,
+                padx=5,
+                pady=8,
+                sticky="w"
+            )
 
-        ttk.Entry(
-            frame,
-            textvariable=self.weight,
-            width=30
-        ).grid(row=2, column=3)
+            self.create_field(frame, right, row, 3)
 
-        ttk.Label(frame, text="Activity").grid(row=3, column=0)
+            row += 1
 
-        ttk.Combobox(
-            frame,
-            textvariable=self.activity,
-            values=ACTIVITY_LEVELS,
-            width=30,
-            state="readonly"
-        ).grid(row=3, column=1)
+    # -------------------------------------------------
 
-        ttk.Label(frame, text="Goal").grid(row=3, column=2)
+    def create_field(self, parent, field, row, column):
 
-        ttk.Combobox(
-            frame,
-            textvariable=self.goal,
-            values=GOALS,
-            width=30,
-            state="readonly"
-        ).grid(row=3, column=3)
+        label, variable, field_type = field
+
+        # -----------------------------
+        # Readonly Entry
+        # -----------------------------
+        if field_type == "entry_readonly":
+
+            ttk.Entry(
+                parent,
+                textvariable=variable,
+                state="readonly",
+                width=28
+            ).grid(
+                row=row,
+                column=column,
+                sticky="ew",
+                padx=3,
+                pady=3
+            )
+
+        # -----------------------------
+        # Normal Entry
+        # -----------------------------
+        elif field_type == "entry":
+
+            ttk.Entry(
+                parent,
+                textvariable=variable,
+                width=28
+            ).grid(
+                row=row,
+                column=column,
+                sticky="ew",
+                padx=3,
+                pady=3
+            )
+
+        # -----------------------------
+        # Gender
+        # -----------------------------
+        elif field_type == "gender":
+
+            gender_frame = ttk.Frame(parent)
+
+            gender_frame.grid(
+                row=row,
+                column=column,
+                sticky="w",
+                padx=3,
+                pady=3
+            )
+
+            ttk.Radiobutton(
+                gender_frame,
+                text="Male",
+                variable=self.gender,
+                value="Male"
+            ).pack(side="left")
+
+            ttk.Radiobutton(
+                gender_frame,
+                text="Female",
+                variable=self.gender,
+                value="Female"
+            ).pack(side="left", padx=(10, 0))
+
+        # -----------------------------
+        # Activity
+        # -----------------------------
+        elif field_type == "activity":
+
+            ttk.Combobox(
+                parent,
+                textvariable=self.activity,
+                values=ACTIVITY_LEVELS,
+                state="readonly"
+            ).grid(
+                row=row,
+                column=column,
+                sticky="ew",
+                padx=3,
+                pady=3
+            )
+
+        # -----------------------------
+        # Goal
+        # -----------------------------
+        elif field_type == "goal":
+
+            ttk.Combobox(
+                parent,
+                textvariable=self.goal,
+                values=GOALS,
+                state="readonly"
+            ).grid(
+                row=row,
+                column=column,
+                sticky="ew",
+                padx=3,
+                pady=3
+            )
 
     # -------------------------------------------------
 
     def create_button_frame(self):
 
-        frame = ttk.Frame(self.root)
+        frame = ttk.LabelFrame(
+            self.content_frame,
+            text="⚡ Quick Actions",
+            padding=12
+        )
 
-        frame.pack(pady=10)
+        frame.grid(
+            row=0,
+            column=1,
+            sticky="nsew",
+            pady=(0, 10),
+            padx=(5, 0)
+        )
 
-        ttk.Button(
-            frame,
-            text="Add User",
-            width=15,
-            command=self.add_user
-        ).grid(row=0, column=0, padx=5)
+        frame.columnconfigure(0, weight=1)
 
-        ttk.Button(
-            frame,
-            text="Update",
-            width=15,
-            command=self.update_user
-        ).grid(row=0, column=1, padx=5)
+        # Inner frame
+        button_frame = ttk.Frame(frame)
+        button_frame.pack(expand=True, fill="x")
 
-        ttk.Button(
-            frame,
-            text="Delete",
-            width=15,
-            command=self.delete_user
-        ).grid(row=0, column=2, padx=5)
+        buttons = [
 
-        ttk.Button(
-            frame,
-            text="Clear",
-            width=15,
-            command=self.clear_fields
-        ).grid(row=0, column=3, padx=5)
+            ("➕ Add User", self.add_user),
+            ("✏ Update User", self.update_user),
+            ("🗑 Delete User", self.delete_user),
+            ("🧹 Clear Fields", self.clear_fields)
+
+        ]
+
+        for text, command in buttons:
+
+            ttk.Button(
+                button_frame,
+                text=text,
+                command=command,
+                width=18
+            ).pack(
+                fill="x",
+                pady=3,
+                ipady=1
+            )
 
     # -------------------------------------------------
 
     def create_search_frame(self):
 
         frame = ttk.LabelFrame(
-            self.root,
-            text="Search User",
-            padding=10
+            self.content_frame,
+            text="🔍 Search User",
+            padding=15
         )
 
-        frame.pack(fill="x", padx=20, pady=10)
+        frame.grid(
+            row=1,
+            column=0,
+            columnspan=2,
+            sticky="ew",
+            pady=(0, 10)
+        )
+
+        frame.columnconfigure(1, weight=1)
 
         ttk.Label(
             frame,
             text="User ID"
-        ).grid(row=0, column=0, padx=5)
+        ).grid(
+            row=0,
+            column=0,
+            padx=(5, 10),
+            pady=5,
+            sticky="w"
+        )
 
         ttk.Entry(
             frame,
-            textvariable=self.search_id,
-            width=30
-        ).grid(row=0, column=1)
+            textvariable=self.search_id
+        ).grid(
+            row=0,
+            column=1,
+            sticky="ew",
+            padx=5
+        )
 
         ttk.Button(
             frame,
-            text="Search",
+            text="🔍 Search",
             command=self.search_user
-        ).grid(row=0, column=2, padx=10)
+        ).grid(
+            row=0,
+            column=2,
+            padx=(10, 5)
+        )
+
+    # -------------------------------------------------
+
+    def create_dashboard_cards(self):
+
+        frame = tk.Frame(
+            self.content_frame,
+            bg="#F5FAFD"
+        )
+
+        frame.grid(
+            row=2,
+            column=0,
+            columnspan=2,
+            sticky="ew",
+            pady=(0, 10)
+        )
+
+        for i in range(3):
+            frame.columnconfigure(i, weight=1)
+
+        self.total_users_value, self.total_users_sub = self.create_stat_card(
+            frame,
+            0,
+            "👥",
+            "Total Users",
+            "0",
+            "Registered"
+        )
+
+        self.avg_bmi_value, self.avg_bmi_sub = self.create_stat_card(
+            frame,
+            1,
+            "📊",
+            "Average BMI",
+            "0.0",
+            "Normal"
+        )
+
+        self.goal_value, self.goal_sub = self.create_stat_card(
+            frame,
+            2,
+            "🎯",
+            "Popular Goal",
+            "-",
+            "No Data"
+        )
+    # -------------------------------------------------
+
+    def create_stat_card(self, parent, column, icon, title, value, subtitle):
+
+        card = tk.Frame(
+            parent,
+            bg="white",
+            bd=1,
+            relief="solid"
+        )
+
+        card.grid(
+            row=0,
+            column=column,
+            padx=8,
+            sticky="nsew"
+        )
+
+        # Icon
+        tk.Label(
+            card,
+            text=icon,
+            font=("Segoe UI Emoji", 20),
+            bg="white",
+            fg="#1976D2"
+        ).pack(pady=(4, 0))
+
+        # Title
+        tk.Label(
+            card,
+            text=title,
+            font=("Segoe UI", 10),
+            bg="white",
+            fg="#666666"
+        ).pack()
+
+        # Main Value
+        value_label = tk.Label(
+            card,
+            text=value,
+            font=("Segoe UI", 18, "bold"),
+            bg="white",
+            fg="#114B5F"
+        )
+
+        value_label.pack(pady=(2, 0))
+
+        # Subtitle
+        subtitle_label = tk.Label(
+            card,
+            text=subtitle,
+            font=("Segoe UI", 9),
+            bg="white",
+            fg="#888888"
+        )
+
+        subtitle_label.pack(pady=(0, 6))
+
+        return value_label, subtitle_label
+
+    # -------------------------------------------------
+
+    def update_dashboard(self):
+
+        users = self.controller.get_all_users()
+
+        # -----------------------
+        # Total Users
+        # -----------------------
+        total_users = len(users)
+
+        self.total_users_value.config(
+            text=str(total_users)
+        )
+
+        self.total_users_sub.config(
+            text="Registered"
+        )
+
+        # -----------------------
+        # Average BMI
+        # -----------------------
+        if total_users > 0:
+
+            avg_bmi = sum(
+                user["bmi"] for user in users
+            ) / total_users
+
+            self.avg_bmi_value.config(
+                text=f"{avg_bmi:.1f}"
+            )
+
+            self.avg_bmi_sub.config(
+                text="Average BMI"
+            )
+
+        else:
+
+            self.avg_bmi_value.config(text="0.0")
+            self.avg_bmi_sub.config(text="No Data")
+
 
     # -------------------------------------------------
 
     def create_table(self):
 
-        frame = ttk.Frame(self.root)
+        table_frame = ttk.LabelFrame(
+            self.content_frame,
+            text="📋 User Records",
+            padding=10
+        )
 
-        frame.pack(fill="both", expand=True, padx=20, pady=10)
+        table_frame.grid(
+            row=3,
+            column=0,
+            columnspan=2,
+            sticky="nsew",
+            pady=(0, 10)
+        )
+
+        table_frame.columnconfigure(0, weight=1)
+        table_frame.rowconfigure(0, weight=1)
 
         columns = (
             "ID",
@@ -252,45 +581,60 @@ class UserDashboard:
         )
 
         self.tree = ttk.Treeview(
-            frame,
+            table_frame,
             columns=columns,
             show="headings",
-            height=12
+            height=13
         )
 
         for col in columns:
 
-            self.tree.heading(col, text=col)
+            self.tree.heading(
+                col,
+                text=col
+            )
 
-            self.tree.column(col, width=120, anchor="center")
+            self.tree.column(
+                col,
+                anchor="center",
+                width=130
+            )
 
-        # Alternate row colors
+        scrollbar = ttk.Scrollbar(
+            table_frame,
+            orient="vertical",
+            command=self.tree.yview
+        )
+
+        self.tree.configure(
+            yscrollcommand=scrollbar.set
+        )
+
+        self.tree.grid(
+            row=0,
+            column=0,
+            sticky="nsew"
+        )
+
+        scrollbar.grid(
+            row=0,
+            column=1,
+            sticky="ns"
+        )
+
+        self.tree.bind(
+            "<Double-1>",
+            self.select_user
+        )
+
         self.tree.tag_configure(
             "even",
-            background="#F5F5F5"
+            background="#F8FBFD"
         )
 
         self.tree.tag_configure(
             "odd",
             background="white"
-        )
-
-        scrollbar = ttk.Scrollbar(
-            frame,
-            orient="vertical",
-            command=self.tree.yview
-        )
-
-        self.tree.configure(yscrollcommand=scrollbar.set)
-
-        self.tree.pack(side="left", fill="both", expand=True)
-
-        scrollbar.pack(side="right", fill="y")
-
-        # Double-click to load user information
-        self.tree.bind(
-            "<Double-1>",
-            self.select_user
         )
 
 
@@ -322,6 +666,7 @@ class UserDashboard:
                 tags=(tag,)
             )
 
+        self.update_dashboard()
 
     # -------------------------------------------------
     
@@ -553,6 +898,34 @@ class UserDashboard:
                 "User not found."
             )
     
+    # -------------------------------------------------
+
+    def create_status_bar(self):
+
+        self.status = tk.Label(
+
+            self.root,
+
+            text="Ready",
+
+            anchor="w",
+
+            relief="sunken",
+
+            padx=10,
+
+            font=("Segoe UI", 9)
+
+        )
+
+        self.status.pack(
+
+            side="bottom",
+
+            fill="x"
+
+        )
+
     # -------------------------------------------------
 
     def clear_fields(self):
