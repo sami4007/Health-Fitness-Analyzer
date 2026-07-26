@@ -2,9 +2,6 @@ import tkinter as tk
 from tkinter import ttk, messagebox
 
 from config import (
-    WINDOW_TITLE,
-    WINDOW_WIDTH,
-    WINDOW_HEIGHT,
     ACTIVITY_LEVELS,
     GOALS
 )
@@ -19,12 +16,7 @@ class UserDashboard:
         self.root = root
         self.controller = UserController()
 
-        self.root.title(WINDOW_TITLE)
-        self.root.geometry("1200x800")
-        self.root.resizable(False, False)
-        self.root.configure(
-        bg="#F5FAFD"
-        )
+
 
         self.create_variables()
         self.create_widgets()
@@ -55,11 +47,6 @@ class UserDashboard:
     # -------------------------------------------------
 
     def create_widgets(self):
-
-        # ==========================
-        # Header
-        # ==========================
-        self.create_title()
 
         # ==========================
         # Main Container
@@ -100,37 +87,6 @@ class UserDashboard:
         self.create_search_frame()
         self.create_dashboard_cards()
         self.create_table()
-        self.create_status_bar()
-
-    # -------------------------------------------------
-
-    def create_title(self):
-
-        title_frame = tk.Frame(
-            self.root
-        )
-
-        title_frame.pack(
-            pady=(15, 5)
-        )
-
-        title = tk.Label(
-            title_frame,
-            text="🏃 Health Fitness & Calorie Tracker",
-            font=("Segoe UI", 20, "bold"),
-            fg="#114B5F"
-        )
-
-        title.pack()
-
-        subtitle = tk.Label(
-            title_frame,
-            text="User Management Dashboard",
-            font=("Segoe UI", 11)
-        )
-
-        subtitle.pack(pady=(5, 0))
-
 
     # -------------------------------------------------
 
@@ -898,34 +854,6 @@ class UserDashboard:
                 "User not found."
             )
     
-    # -------------------------------------------------
-
-    def create_status_bar(self):
-
-        self.status = tk.Label(
-
-            self.root,
-
-            text="Ready",
-
-            anchor="w",
-
-            relief="sunken",
-
-            padx=10,
-
-            font=("Segoe UI", 9)
-
-        )
-
-        self.status.pack(
-
-            side="bottom",
-
-            fill="x"
-
-        )
-
     # -------------------------------------------------
 
     def clear_fields(self):

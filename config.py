@@ -8,8 +8,8 @@ Project Configuration
 
 WINDOW_TITLE = "Health Fitness & Calorie Tracker"
 
-WINDOW_WIDTH = 1150
-WINDOW_HEIGHT = 720
+WINDOW_WIDTH = 1200
+WINDOW_HEIGHT = 800
 
 
 # ==========================
