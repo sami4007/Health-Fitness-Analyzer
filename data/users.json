@@ -1,5 +1,16 @@
 [
     {
+        "user_id": "U001",
+        "name": "Mahim",
+        "age": 29,
+        "gender": "Male",
+        "height": 175.0,
+        "weight": 64.0,
+        "activity_level": "Moderate",
+        "goal": "Maintain",
+        "bmi": 19.75
+    },
+    {
         "user_id": "U002",
         "name": "Rahim",
         "age": 23,

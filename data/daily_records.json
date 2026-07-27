@@ -5,5 +5,26 @@
         "meal": "Breakfast",
         "food_name": "Rice",
         "servings": 100.0
+    },
+    {
+        "user_id": "U003",
+        "date": "2026-07-28",
+        "meal": "Breakfast",
+        "food_name": "Chicken",
+        "servings": 200.0
+    },
+    {
+        "user_id": "U003",
+        "date": "2026-07-28",
+        "meal": "Breakfast",
+        "food_name": "Chicken",
+        "servings": 50.0
+    },
+    {
+        "user_id": "U002",
+        "date": "2026-07-28",
+        "meal": "Breakfast",
+        "food_name": "Chicken",
+        "servings": 100.0
     }
 ]

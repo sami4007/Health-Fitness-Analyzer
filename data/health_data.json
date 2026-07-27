@@ -178,5 +178,23 @@
         "ideal_weight": 71.28,
         "recommended_calories": 1500,
         "health_score": 60
+    },
+    {
+        "user_id": "U011",
+        "name": "Sami",
+        "gender": "Male",
+        "age": 25,
+        "height": 172.0,
+        "weight": 68.0,
+        "calories": 2000,
+        "exercise": 2.0,
+        "water_intake": 3.0,
+        "bmi": 22.99,
+        "status": "Healthy",
+        "body_fat": 17.13,
+        "water_need": 2.38,
+        "ideal_weight": 65.08,
+        "recommended_calories": 2200,
+        "health_score": 100
     }
 ]
