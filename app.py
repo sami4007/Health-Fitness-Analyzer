@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import ttk
 
 from dashboards.user_dashboard import UserDashboard
+from dashboards.analytics_dashboard import AnalyticsDashboard
 from dashboards.health_dashboard import HealthDashboard  
 
 
@@ -183,6 +184,10 @@ class Application:
 
         self.clear_content()
 
+        AnalyticsDashboard(self.content)
+
+   
+    
         ttk.Label(
             self.content,
             text="Dashboard 4 Coming Soon",
