@@ -20,6 +20,8 @@ USERS_FILE = "data/users.json"
 
 DAILY_RECORD_FILE = "data/daily_records.json"
 
+DAILY_SUMMARY_FILE = "data/daily_summary.json"
+
 FOOD_DATABASE_FILE = "data/food_database.json"
 
 POPULATION_DATASET = "data/population_health.csv"

@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import ttk
 
 from dashboards.user_dashboard import UserDashboard
+from dashboards.calorie_dashboard import CalorieDashboard
 
 
 class Application:
@@ -76,7 +77,7 @@ class Application:
 
         buttons = [
             ("👤 User", self.show_user_dashboard),
-            ("📅 Daily", self.show_daily_dashboard),
+            ("🍽 Calorie", self.show_calorie_dashboard),
             ("🍎 Nutrition", self.show_nutrition_dashboard),
             ("📊 Analytics", self.show_analytics_dashboard)
         ]
@@ -151,17 +152,21 @@ class Application:
 
     # -------------------------------------
 
-    def show_daily_dashboard(self):
+    def show_calorie_dashboard(self):
 
         self.highlight_button(1)
 
-        self.clear_content()
+        self.clear_content() 
+
 
         ttk.Label(
             self.content,
             text="Dashboard 2 Coming Soon",
             font=("Segoe UI", 18)
         ).pack(expand=True)
+
+        
+
 
     # -------------------------------------
 
@@ -171,11 +176,9 @@ class Application:
 
         self.clear_content()
 
-        ttk.Label(
-            self.content,
-            text="Dashboard 3 Coming Soon",
-            font=("Segoe UI", 18)
-        ).pack(expand=True)
+        CalorieDashboard(self.content)
+
+
 
     # -------------------------------------
 
