@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import ttk
 
 from dashboards.user_dashboard import UserDashboard
+from dashboards.analytics_dashboard import AnalyticsDashboard
 
 
 class Application:
@@ -185,8 +186,7 @@ class Application:
 
         self.clear_content()
 
-        ttk.Label(
-            self.content,
-            text="Dashboard 4 Coming Soon",
-            font=("Segoe UI", 18)
-        ).pack(expand=True)
+        AnalyticsDashboard(self.content)
+
+   
+    
