@@ -3,6 +3,7 @@ from tkinter import ttk
 
 from dashboards.user_dashboard import UserDashboard
 from dashboards.analytics_dashboard import AnalyticsDashboard
+from dashboards.health_dashboard import HealthDashboard  
 
 
 class Application:
@@ -77,7 +78,7 @@ class Application:
 
         buttons = [
             ("👤 User", self.show_user_dashboard),
-            ("📅 Daily", self.show_daily_dashboard),
+            ("📅 Health", self.show_daily_dashboard),
             ("🍎 Nutrition", self.show_nutrition_dashboard),
             ("📊 Analytics", self.show_analytics_dashboard)
         ]
@@ -158,11 +159,8 @@ class Application:
 
         self.clear_content()
 
-        ttk.Label(
-            self.content,
-            text="Dashboard 2 Coming Soon",
-            font=("Segoe UI", 18)
-        ).pack(expand=True)
+        
+        HealthDashboard(self.content)
 
     # -------------------------------------
 
@@ -190,3 +188,14 @@ class Application:
 
    
     
+        ttk.Label(
+            self.content,
+            text="Dashboard 4 Coming Soon",
+            font=("Segoe UI", 18)
+        ).pack(expand=True)
+
+
+if __name__ == "__main__":
+    root = tk.Tk()
+    app = Application(root)
+    root.mainloop()
