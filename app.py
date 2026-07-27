@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import ttk
 
 from dashboards.user_dashboard import UserDashboard
+from dashboards.analytics_dashboard import AnalyticsDashboard
 from dashboards.calorie_dashboard import CalorieDashboard
 from dashboards.health_dashboard import HealthDashboard  
 
@@ -170,6 +171,14 @@ class Application:
     # -------------------------------------
 
     def show_nutrition_dashboard(self):
+    
+            print("Nutrition button clicked")
+    
+            self.highlight_button(2)
+    
+            self.clear_content()
+    
+            CalorieDashboard(self.content)
 
         self.highlight_button(2)
 
@@ -178,6 +187,7 @@ class Application:
         CalorieDashboard(self.content)
 
 
+        
 
     # -------------------------------------
 
@@ -187,6 +197,10 @@ class Application:
 
         self.clear_content()
 
+        AnalyticsDashboard(self.content)
+
+   
+    
         ttk.Label(
             self.content,
             text="Dashboard 4 Coming Soon",

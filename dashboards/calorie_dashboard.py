@@ -1212,6 +1212,22 @@ class CalorieDashboard:
         if food_list:
 
          self.food_combobox.current(0)
+        print("Loading foods...")
+
+        print("Food objects:", self.controller.food_database)
+
+        food_list = []
+
+        for food in self.controller.food_database:
+            print(food.food_name)
+            food_list.append(food.food_name)
+
+        print("Food list:", food_list)
+
+        self.food_combobox["values"] = food_list
+
+        if food_list:
+            self.food_combobox.current(0)
        
     def get_selected_user_id(self):
 

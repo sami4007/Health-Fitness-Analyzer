@@ -105,6 +105,46 @@ class UserController:
                 return True
 
         return False
+
+    def analyze_users(self):
+        total_bmi = 0
+
+        healthy = 0
+        overweight = 0
+        obese = 0
+
+        total_users = len(self.users)
+
+        if total_users == 0:
+            return {
+                "average_bmi": 0,
+                "healthy": 0,
+                "overweight": 0,
+                "obese": 0
+            }
+
+        for user in self.users:
+            bmi = float(user["bmi"])
+            total_bmi += bmi
+
+            category = user.get("bmi_category")
+
+            if category is None:
+                category = get_bmi_category(bmi)
+
+            if category in ["Normal", "Healthy"]:
+                healthy += 1
+            elif category == "Overweight":
+                overweight += 1
+            elif category == "Obese":
+                obese += 1
+
+        return {
+            "average_bmi": round(total_bmi / total_users, 2),
+            "healthy": healthy,
+            "overweight": overweight,
+            "obese": obese
+        }
     
     
     
