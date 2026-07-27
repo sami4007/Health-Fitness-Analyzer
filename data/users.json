@@ -44,23 +44,6 @@
         "goal": "Maintain",
         "bmi": 22.22,
         "bmi_category": "Normal"
-    },
-    {
-        "user_id": "U006",
-        "name": "Ananno",
-        "gender": "Male",
-        "age": 23,
-        "height": 175.0,
-        "weight": 85.0,
-        "calories": 2300,
-        "exercise": 1.0,
-        "water_intake": 2.0,
-        "bmi": 27.76,
-        "status": "Overweight",
-        "body_fat": 22.4,
-        "water_need": 2.98,
-        "ideal_weight": 67.38,
-        "recommended_calories": 1800,
-        "health_score": 80
     }
+
 ]

@@ -1,4 +1,4 @@
-class User:
+class HealthRecord:
     def __init__(self, user_id, name, gender, age, height, weight, calories, exercise, water_intake, 
                  bmi, status, body_fat, water_need, ideal_weight, recommended_calories, health_score):
         self.user_id = user_id

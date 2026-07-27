@@ -79,7 +79,6 @@ class Application:
 
         buttons = [
             ("👤 User", self.show_user_dashboard),
-            ("🍽 Calorie", self.show_calorie_dashboard),
             ("📅 Health", self.show_daily_dashboard),
             ("🍎 Nutrition", self.show_nutrition_dashboard),
             ("📊 Analytics", self.show_analytics_dashboard)
@@ -155,18 +154,14 @@ class Application:
 
     # -------------------------------------
 
-    def show_calorie_dashboard(self):
+    def show_daily_dashboard(self):
 
         self.highlight_button(1)
 
-        self.clear_content() 
-
+        self.clear_content()
 
         
         HealthDashboard(self.content)
-
-        
-
 
     # -------------------------------------
 
@@ -179,13 +174,6 @@ class Application:
             self.clear_content()
     
             CalorieDashboard(self.content)
-
-        self.highlight_button(2)
-
-        self.clear_content()
-
-        CalorieDashboard(self.content)
-
 
         
 

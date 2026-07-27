@@ -1,47 +1,52 @@
 import json
 import os
-from models.health_record import User
+from models.health_record import HealthRecord
 
-# 🔥 আপনার জন্য একদম আলাদা JSON ফাইল (data/health_data.json)
 DATA_FILE = os.path.join(os.path.dirname(os.path.dirname(__file__)), "data", "health_data.json")
 
 
-class UserController:
+class HealthController:
     def __init__(self):
-        self.users = self.load_users()
+        self.records = self.load_records()
 
-    def load_users(self):
-        """আলাদা health_data.json ফাইল থেকে লোড করবে"""
+    def load_records(self):
+
         if not os.path.exists(DATA_FILE):
             os.makedirs(os.path.dirname(DATA_FILE), exist_ok=True)
             with open(DATA_FILE, "w") as f:
                 json.dump([], f)
             return []
+
         try:
             with open(DATA_FILE, "r") as f:
                 return json.load(f)
         except json.JSONDecodeError:
             return []
+        
+    def save_records(self):
 
-    def save_users(self):
-        """শুধুমাত্র আপনার আলাদা health_data.json ফাইলেই সেভ হবে"""
         os.makedirs(os.path.dirname(DATA_FILE), exist_ok=True)
-        with open(DATA_FILE, "w") as f:
-            json.dump(self.users, f, indent=4)
 
-    def generate_user_id(self):
-        if not self.users:
+        with open(DATA_FILE, "w") as f:
+            json.dump(self.records, f, indent=4)
+
+    def generate_record_id(self):
+
+        if not self.records:
             return "U001"
+
         max_id = 0
-        for user in self.users:
-            uid = user.get("user_id", "U000")
+
+        for record in self.records:
+            uid = record.get("user_id", "U000")
+
             if uid.startswith("U"):
                 try:
                     num = int(uid[1:])
-                    if num > max_id:
-                        max_id = num
+                    max_id = max(max_id, num)
                 except ValueError:
                     pass
+
         return f"U{max_id + 1:03d}"
 
     def calculate_health_metrics(self, height, weight, age):
@@ -115,11 +120,11 @@ class UserController:
             "recommendation": rec_message,
         }
 
-    def add_user(self, name, gender, age, height, weight, calories, exercise, water_intake):
-        user_id = self.generate_user_id()
+    def add_record(self, name, gender, age, height, weight, calories, exercise, water_intake):
+        user_id = self.generate_record_id()
         metrics = self.calculate_health_metrics(height, weight, age)
 
-        user_data = {
+        record_data = {
             "user_id": user_id,
             "name": name,
             "gender": gender,
@@ -138,8 +143,9 @@ class UserController:
             "health_score": metrics["health_score"]
         }
 
-        user = User.from_dict(user_data)
+        record = HealthRecord.from_dict(record_data)
 
-        self.users.append(user_data)
-        self.save_users()
-        return user, metrics["recommendation"]
+        self.records.append(record_data)
+        self.save_records()
+
+        return record, metrics["recommendation"]

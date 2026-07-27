@@ -1,13 +1,13 @@
 import tkinter as tk
 from tkinter import messagebox
-from controllers.health_controller import UserController
+from controllers.health_controller import HealthController
 
 class HealthDashboard(tk.Frame):
     def __init__(self, parent):
         super().__init__(parent, bg="#F5FAFD")
         self.pack(fill="both", expand=True)
 
-        self.controller = UserController()
+        self.controller = HealthController()
 
         # Heading
         heading_label = tk.Label(self, text="Health Analysis Dashboard", font=("Arial", 22, "bold"), bg="#F5FAFD")
@@ -122,24 +122,27 @@ class HealthDashboard(tk.Frame):
                 messagebox.showerror("Input Error", "Please enter a Name!")
                 return
 
-            user, rec_message = self.controller.add_user(
+            record, rec_message = self.controller.add_record(
                 name, gender, age, height, weight, calories, exercise, water
             )
 
             self.clear_outputs()
 
-            self.BMI_entry.insert(0, f"{user.bmi:.2f}")
-            self.Status_entry.insert(0, user.status)
-            self.Body_fat_entry.insert(0, f"{user.body_fat:.2f}%")
-            self.Water_need_entry.insert(0, f"{user.water_need:.2f} L")
-            self.Ideal_weight_entry.insert(0, f"{user.ideal_weight:.2f} kg")
-            self.Recommended_calories_entry.insert(0, f"{user.recommended_calories} kcal")
-            self.Health_score_entry.insert(0, str(user.health_score))
+            self.BMI_entry.insert(0, f"{record.bmi:.2f}")
+            self.Status_entry.insert(0, record.status)
+            self.Body_fat_entry.insert(0, f"{record.body_fat:.2f}%")
+            self.Water_need_entry.insert(0, f"{record.water_need:.2f} L")
+            self.Ideal_weight_entry.insert(0, f"{record.ideal_weight:.2f} kg")
+            self.Recommended_calories_entry.insert(0, f"{record.recommended_calories} kcal")
+            self.Health_score_entry.insert(0, str(record.health_score))
 
             self.recommendation_text.insert(tk.END, rec_message)
 
-        except ValueError:
-            messagebox.showerror("Input Error", "Please fill in all fields correctly !")
+        except Exception as e:
+            
+            import traceback
+            traceback.print_exc()
+            messagebox.showerror("Error", str(e))
 
     def clear_outputs(self):
         self.BMI_entry.delete(0, tk.END)
