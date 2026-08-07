@@ -2,7 +2,7 @@ import json
 import os
 from models.health_record import User
 
-# 🔥 আপনার জন্য একদম আলাদা JSON ফাইল (data/health_data.json)
+
 DATA_FILE = os.path.join(os.path.dirname(os.path.dirname(__file__)), "data", "health_data.json")
 
 
@@ -11,7 +11,7 @@ class UserController:
         self.users = self.load_users()
 
     def load_users(self):
-        """আলাদা health_data.json ফাইল থেকে লোড করবে"""
+       
         if not os.path.exists(DATA_FILE):
             os.makedirs(os.path.dirname(DATA_FILE), exist_ok=True)
             with open(DATA_FILE, "w") as f:
@@ -24,7 +24,7 @@ class UserController:
             return []
 
     def save_users(self):
-        """শুধুমাত্র আপনার আলাদা health_data.json ফাইলেই সেভ হবে"""
+      
         os.makedirs(os.path.dirname(DATA_FILE), exist_ok=True)
         with open(DATA_FILE, "w") as f:
             json.dump(self.users, f, indent=4)
